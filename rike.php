@@ -17,42 +17,17 @@ function tell($søk, $db_forbindelse){
 }
 
 
-function t($info, $a, $b){
-    if ($b == 1) {
-        $tilbakenavn = "_dyr";
-    }
-    $ut = "<div style=\"position:relative;\" class=\"w3-third\">";
-    while ($rad = mysqli_fetch_row($info)){
-        foreach ($rad as $felt) {
-        $felt = ucfirst($felt);
-        $ut .= "<a href=\"https://webkode.skit.no/~ole2602/html/Artsdatabase_test/rike.php?{$a}={$felt}\" class=\"tilbake{$tilbakenavn} w3-container\">\n";
-        $ut .= "<p class=\"tilbake_p w3-container\">Tilbake til {$felt}</p>\n";
-        $ut .= "</a>\n";
-        }
-    $ut .= "</div>";
-    return $ut;
-}
-
-
-
-function knapp($info, $a, $b){
-    if ($b == 1) {
-        $noe = "\$info2 = tell(\$felt, \$GLOBALS['db_forbindelse']);\n";
-        $noe2 = "\$ut .= \"<p class=\"antall\">\$info2</p>\";\n";
-    } else {
-        $noe = "";
-        $noe2 = "";
-    }
+function rike($info){
     $ut = "<div class='alt'>\n";
     while ($rad = mysqli_fetch_row($info)){
         foreach ($rad as $felt) {
         $felt = ucfirst($felt);
-        $noe;
+        $info2 = tell($felt, $GLOBALS['db_forbindelse']);
         $ut .= "<div class='w3-third w3-container'>\n";
         $ut .= "<div class=\"rundt\">\n";
-        $ut .= "<a href=\"https://webkode.skit.no/~ole2602/html/Artsdatabase_test/rike.php?{$a}={$felt}\" class=\"linker\">\n";
+        $ut .= "<a href=\"https://webkode.skit.no/~ole2602/html/Artsdatabase_test/rike.php?rike={$felt}\" class=\"linker\">\n";
         $ut .= "<p class=\"linker_p\">$felt</p>\n";
-        $noe2;
+        $ut .= "<p class=\"antall\">$info2</p>\n";
         $ut .= "</a>\n";
         $ut .= "</div>\n";
         $ut .= "</div>\n";
@@ -63,41 +38,242 @@ function knapp($info, $a, $b){
 }
 
 
-function biologisk($a, $b, $c){
-    $query = "SELECT a.navn_norsk FROM ad_hierarki AS a 
-        INNER JOIN ad_hierarki b ON a.kategori_id=b.parent
-        WHERE b.navn_norsk='{$_GET[$a]}' GROUP BY a.navn_norsk;";
-    $infoen = mysqli_query($db_forbindelse, $query);
-    $link = t($infoen, $a, $b);
-    $query = "SELECT a.navn_norsk FROM ad_hierarki AS a 
-    INNER JOIN ad_hierarki b ON b.kategori_id=a.parent
-    WHERE b.navn_norsk='{\$søk}' GROUP BY a.navn_norsk;";
-    $info = mysqli_query($db_forbindelse, $query);
-    if (mysqli_num_rows(\$info)){\n
-        \$front_end = knapp(\$info, $a, $c);
-    } else {\n
-       \$front_end = \"<p class=\"w3-container linker\">Ingen data</p>\";
-    }\n
-    //     $ut =  "elseif (isset(\$_GET['$a'])){\n
-    //     \$art = \"\";\n
-    //     \$søk = \$_GET['$a'];\n
-    //     \$query = \"SELECT a.navn_norsk FROM ad_hierarki AS a \n
-    //     INNER JOIN ad_hierarki b ON a.kategori_id=b.parent\n
-    //     WHERE b.navn_norsk='{\$søk}' GROUP BY a.navn_norsk;\";\n
-    //     \$infoen = mysqli_query(\$db_forbindelse, \$query);\n
-    //     \$link = t(\$infoen, $a, $b);\n
-    //     \$query = \"SELECT a.navn_norsk FROM ad_hierarki AS a \n
-    //     INNER JOIN ad_hierarki b ON b.kategori_id=a.parent\n
-    //     WHERE b.navn_norsk='{\$søk}' GROUP BY a.navn_norsk;\";\n
-    //     \$info = mysqli_query(\$db_forbindelse, \$query);\n
-    //     if (mysqli_num_rows(\$info)){\n
-    //         \$front_end = knapp(\$info, $a, $c);
-    //     } else {\n
-    //        \$front_end = \"<p class=\"w3-container linker\">Ingen data</p>\";
-    //     }\n
-    // }";
-    return eval($ut);
+function rekke($info){
+    $ut = "<div class='alt'>\n";
+    while ($rad = mysqli_fetch_row($info)){
+        foreach ($rad as $felt) {
+        $felt = ucfirst($felt);
+        $info2 = tell($felt, $GLOBALS['db_forbindelse']);
+        $ut .= "<div class='w3-quarter w3-container'>\n";
+        $ut .= "<a href=\"https://webkode.skit.no/~ole2602/html/Artsdatabase_test/rike.php?rekke={$felt}\" class=\"linker\">\n";
+        $ut .= "<p class=\"linker_p\">$felt</p>\n";
+        $ut .= "<p class=\"antall\">$info2</p>\n";
+        $ut .= "</a>\n";
+        $ut .= "</div>\n";
+        }
+    }
+    $ut .= "</div>\n";
+    return $ut;
 }
+function klasse($info){
+    $ut = "<div class='alt'>\n";
+    while ($rad = mysqli_fetch_row($info)){
+        foreach ($rad as $felt) {
+        $felt = ucfirst($felt);
+        $info2 = tell($felt, $GLOBALS['db_forbindelse']);
+        $ut .= "<div class='w3-quarter w3-container'>\n";
+        $ut .= "<a href=\"https://webkode.skit.no/~ole2602/html/Artsdatabase_test/rike.php?klasse={$felt}\" class=\"linker\">\n";
+        $ut .= "<p class=\"linker_p\">$felt</p>\n";
+        $ut .= "<p class=\"antall\">$info2</p>\n";
+        $ut .= "</a>\n";
+        $ut .= "</div>\n";
+        }
+    }
+    $ut .= "</div>\n";
+    return $ut;
+}
+function orden($info){
+    $ut = "<div class='alt'>\n";
+    while ($rad = mysqli_fetch_row($info)){
+        foreach ($rad as $felt) {
+        $felt = ucfirst($felt);
+        $info2 = tell($felt, $GLOBALS['db_forbindelse']);
+        $ut .= "<div class='w3-quarter w3-container'>\n";
+        $ut .= "<a href=\"https://webkode.skit.no/~ole2602/html/Artsdatabase_test/rike.php?orden={$felt}\" class=\"linker\">\n";
+        $ut .= "<p class=\"linker_p\">$felt</p>\n";
+        $ut .= "<p class=\"antall\">$info2</p>\n";
+        $ut .= "</a>\n";
+        $ut .= "</div>\n";
+        }
+    }
+    $ut .= "</div>\n";
+    return $ut;
+}
+function familie($info){
+    $ut = "<div class='alt'>\n";
+    while ($rad = mysqli_fetch_row($info)){
+        foreach ($rad as $felt) {
+        $felt = ucfirst($felt);
+        $info2 = tell($felt, $GLOBALS['db_forbindelse']);
+        $ut .= "<div class='w3-quarter w3-container'>\n";
+        $ut .= "<a href=\"https://webkode.skit.no/~ole2602/html/Artsdatabase_test/rike.php?familie={$felt}\" class=\"linker\">\n";
+        $ut .= "<p class=\"linker_p\">$felt</p>\n";
+        $ut .= "<p class=\"antall\">$info2</p>\n";
+        $ut .= "</a>\n";
+        $ut .= "</div>\n";
+        }
+    }
+    $ut .= "</div>\n";
+    return $ut;
+}
+function slekt($info){
+    $ut = "<div class='alt'>\n";
+    while ($rad = mysqli_fetch_row($info)){
+        foreach ($rad as $felt) {
+        $felt = ucfirst($felt);
+        $info2 = tell($felt, $GLOBALS['db_forbindelse']);
+        $ut .= "<div class='w3-quarter w3-container'>\n";
+        $ut .= "<a href=\"https://webkode.skit.no/~ole2602/html/Artsdatabase_test/rike.php?slekt={$felt}\" class=\"linker\">\n";
+        $ut .= "<p class=\"linker_p\">$felt</p>\n";
+        $ut .= "<p class=\"antall\">$info2</p>\n";
+        $ut .= "</a>\n";
+        $ut .= "</div>\n";
+        }
+    }
+    $ut .= "</div>\n";
+    return $ut;
+}
+function id($info){
+    $ut = "<div class='alt'>\n";
+    while ($rad = mysqli_fetch_row($info)){
+        foreach ($rad as $felt) {
+        $felt = ucfirst($felt);
+        $ut .= "<div class='w3-third w3-container'>\n";
+        $ut .= "<a href=\"https://webkode.skit.no/~ole2602/html/Artsdatabase_test/rike.php?id={$felt}\" class=\"linker\">\n";
+        $ut .= "<p class=\"linker_p\">$felt</p>\n";
+        $ut .= "</a>\n";
+        $ut .= "</div>\n";
+        }
+    }
+    $ut .= "</div>\n";
+    return $ut;
+}
+
+
+function t_rike($info){
+    $ut = "<div style=\"position:relative;\" class=\"w3-third\">\n";
+    while($rad = mysqli_fetch_row($info)){
+        foreach ($rad as $felt) {
+        $felt = ucfirst($felt);
+        $ut .= "<a href=\"https://webkode.skit.no/~ole2602/html/Artsdatabase_test/rike.php\" class=\"tilbake w3-container\">\n";
+        $ut .= "<p class=\"tilbake_p w3-container\">Tilbake til {$felt}</p>\n";
+        $ut .= "</a>\n";
+        }
+    } 
+    $ut .= "</div>\n";
+    return $ut;
+} 
+
+
+function t_rekke($info){
+    $ut = "<div style=\"position:relative;\" class=\"w3-third\">\n";
+    while($rad = mysqli_fetch_row($info)){
+        foreach ($rad as $felt) {
+        $felt = ucfirst($felt);
+        $ut .= "<a href=\"https://webkode.skit.no/~ole2602/html/Artsdatabase_test/rike.php?rike={$felt}\" class=\"tilbake w3-container\">\n";
+        $ut .= "<p class=\"tilbake_p w3-container\">Tilbake til {$felt}</p>\n";
+        $ut .= "</a>\n";
+        }
+    } 
+    $ut .= "</div>\n";
+    return $ut;
+} 
+
+
+function t_klasse($info){
+    $ut = "<div style=\"position:relative;\" class=\"w3-third\">";
+    while ($rad = mysqli_fetch_row($info)){  
+        foreach ($rad as $felt) {
+        $felt = ucfirst($felt);
+        $ut .= "<a href=\"https://webkode.skit.no/~ole2602/html/Artsdatabase_test/rike.php?rekke={$felt}\" class=\"tilbake w3-container\">\n";
+        $ut .= "<p class=\"tilbake_p w3-container\">Tilbake til {$felt}</p>\n";
+        $ut .= "</a>\n";
+        }
+$ut .= "</div>\n";
+
+    }
+    return $ut;
+}
+
+
+function t_orden($info){
+    $ut = "<div style=\"position:relative;\" class=\"w3-third\">\n";
+    while ($rad = mysqli_fetch_row($info)){
+        foreach ($rad as $felt) {
+        $felt = ucfirst($felt);
+        $ut .= "<a href=\"https://webkode.skit.no/~ole2602/html/Artsdatabase_test/rike.php?klasse={$felt}\" class=\"tilbake w3-container\">\n";
+        $ut .= "<p class=\"tilbake_p w3-container\">Tilbake til {$felt}</p>\n";
+        $ut .= "</a>\n";
+        }
+    $ut .= "</div>\n";
+
+    }
+    return $ut;
+}
+
+
+function t_familie($info){
+    $ut = "<div style=\"position:relative;\" class=\"w3-third\">";
+    while ($rad = mysqli_fetch_row($info)){
+        foreach ($rad as $felt) {
+        $felt = ucfirst($felt);
+        $ut .= "<a href=\"https://webkode.skit.no/~ole2602/html/Artsdatabase_test/rike.php?orden={$felt}\" class=\"tilbake w3-container\">\n";
+        $ut .= "<p class=\"tilbake_p w3-container\">Tilbake til {$felt}</p>\n";
+        $ut .= "</a>\n";
+        $ut .= "</div>\n";
+   
+   $ut .= "</div>\n";
+    }
+    }
+    return $ut;
+}
+
+
+
+function t_slekt($info){
+    $ut = "<div style=\"position:relative;\" class=\"w3-third\">";
+    while ($rad = mysqli_fetch_row($info)){
+        foreach ($rad as $felt) {
+        $felt = ucfirst($felt);
+        $ut .= "<a href=\"https://webkode.skit.no/~ole2602/html/Artsdatabase_test/rike.php?familie={$felt}\" class=\"tilbake w3-container\">\n";
+        $ut .= "<p class=\"tilbake_p w3-container\">Tilbake til {$felt}</p>\n";
+        $ut .= "</a>\n";
+        }
+$ut .= "</div>";
+
+    }
+    return $ut;
+}
+
+
+function t_id($info){
+    $ut = "<div style=\"position:relative;\" class=\"w3-third\">";
+    while ($rad = mysqli_fetch_row($info)){
+        foreach ($rad as $felt) {
+        $felt = ucfirst($felt);
+        $ut .= "<a href=\"https://webkode.skit.no/~ole2602/html/Artsdatabase_test/rike.php?slekt={$felt}\" class=\"tilbake_dyr w3-container\">\n";
+        $ut .= "<p class=\"tilbake_p w3-container\">Tilbake til {$felt}</p>\n";
+        $ut .= "</a>\n";
+        }
+$ut .= "</div>";
+
+    }
+    return $ut;
+}
+
+
+function hent_info_om_art($art, $db_forbindelse) {
+    $query = "SELECT ad_hierarki.kategori_id, ad_hierarki.navn AS latinsk, ad_hierarki.navn_norsk AS art, ad_sider.info as informasjon, 
+    ad_sider.info2 AS 'annen-info', ad_bilder.file_path AS Bilde, slekt.navn_norsk AS slekt, familie.navn_norsk AS familie, 
+    orden.navn_norsk AS orden, klasse.navn_norsk AS klasse, rekke.navn_norsk AS rekke, rike.navn_norsk AS rike
+    FROM ad_hierarki
+    JOIN ad_sider ON ad_hierarki.kategori_id = ad_sider.kategori_id
+    JOIN ad_bilder ON ad_hierarki.kategori_id = ad_bilder.kategori_id
+    JOIN ad_hierarki slekt ON ad_hierarki.parent = slekt.kategori_id
+    JOIN ad_hierarki familie ON slekt.parent = familie.kategori_id
+    JOIN ad_hierarki orden ON familie.parent = orden.kategori_id
+    JOIN ad_hierarki klasse ON orden.parent = klasse.kategori_id
+    JOIN ad_hierarki rekke ON klasse.parent = rekke.kategori_id
+    JOIN ad_hierarki rike ON rekke.parent = rike.kategori_id
+    WHERE ad_hierarki.navn_norsk = '{$art}'";
+return mysqli_query($db_forbindelse, $query);
+}
+
+$link = "";
+
+
+$bio = array("rekke","klasse", "orden", "familie", "slekt", "id");
+
 if (isset($_GET['id'])){
     $art = $_GET['id'];     
     function lag_side($info){
@@ -157,21 +333,29 @@ if (isset($_GET['id'])){
     $infoen = hent_info_om_art($art, $db_forbindelse);
     $front_end = lag_side($infoen);
 
-}
-biologisk("rike", 0, 0);
-biologisk("rike", 0, 0);
-
-
-biologisk("rekke", 0, 0);
-
-biologisk("klasse", 0, 0);
-
-biologisk("orden", 0, 0);
-
-biologisk("familie", 0, 0);
-
-biologisk("slekt", 1, 1);
- else {
+} elseif (isset($_GET){
+    $c = array_keys($_GET);
+    $b = array_diff($bio, $c);
+    $a = $c[0]
+    print($a);
+    print($b);
+    $art = "";
+    $søk = $_GET[$a];
+    $query = "SELECT a.navn_norsk FROM ad_hierarki AS a 
+    INNER JOIN ad_hierarki b ON a.kategori_id=b.parent
+    WHERE b.navn_norsk='{$søk}' GROUP BY a.navn_norsk;";
+    $infoen = mysqli_query($db_forbindelse, $query);
+    $link = t_{$a}($infoen);
+    $query = "SELECT a.navn_norsk FROM ad_hierarki AS a 
+    INNER JOIN ad_hierarki b ON b.kategori_id=a.parent
+    WHERE b.navn_norsk='{$søk}' GROUP BY a.navn_norsk;";
+    $info = mysqli_query($db_forbindelse, $query);
+    if (mysqli_num_rows($info)){
+        $front_end = $b[0]($info);
+    } else {
+        $front_end = "<p class=\"w3-container linker\">Ingen data</p>\n";
+    }
+ } else {
     $link = "";
     $art = "";
     $query = "SELECT navn_norsk FROM ad_hierarki WHERE parent='1' ORDER BY navn_norsk;";
@@ -179,38 +363,6 @@ biologisk("slekt", 1, 1);
     $front_end = rike($rike);
 }
 
-
- 
-function hent_info_om_art($art, $db_forbindelse) {
-    $query = "SELECT ad_hierarki.kategori_id, ad_hierarki.navn AS latinsk, ad_hierarki.navn_norsk AS art, ad_sider.info as informasjon, 
-    ad_sider.info2 AS 'annen-info', ad_bilder.file_path AS Bilde, slekt.navn_norsk AS slekt, familie.navn_norsk AS familie, 
-    orden.navn_norsk AS orden, klasse.navn_norsk AS klasse, rekke.navn_norsk AS rekke, rike.navn_norsk AS rike
-    FROM ad_hierarki
-    JOIN ad_sider ON ad_hierarki.kategori_id = ad_sider.kategori_id
-    JOIN ad_bilder ON ad_hierarki.kategori_id = ad_bilder.kategori_id
-    JOIN ad_hierarki slekt ON ad_hierarki.parent = slekt.kategori_id
-    JOIN ad_hierarki familie ON slekt.parent = familie.kategori_id
-    JOIN ad_hierarki orden ON familie.parent = orden.kategori_id
-    JOIN ad_hierarki klasse ON orden.parent = klasse.kategori_id
-    JOIN ad_hierarki rekke ON klasse.parent = rekke.kategori_id
-    JOIN ad_hierarki rike ON rekke.parent = rike.kategori_id
-    WHERE ad_hierarki.navn_norsk = '{$art}'";
-return mysqli_query($db_forbindelse, $query);
-}
-
-$link = "";
-
-if (isset($_GET['id'])){
-    $art = $_GET['id'];     
-    $query = "SELECT a.navn_norsk FROM ad_hierarki AS a 
-    INNER JOIN ad_hierarki b ON a.kategori_id=b.parent
-    WHERE b.navn_norsk='{$art}' GROUP BY a.navn_norsk;";
-    $infoen = mysqli_query($db_forbindelse, $query);
-    $link = t_id($infoen);
-    $infoen = hent_info_om_art($art, $db_forbindelse);
-    $front_end = lag_side($infoen);
-
-} 
 
 if (isset($_POST['dyr'])){
     $dyrnavn = $_POST['dyr'];
@@ -234,8 +386,9 @@ if (isset($_POST['dyr'])){
     }
 }
 
-$infoen = hent_info_om_art($art, $db_forbindelse);
-$tabell = mysqli_fetch_assoc($infoen);
+    $infoen = hent_info_om_art($art, $db_forbindelse);
+    $tabell = mysqli_fetch_assoc($infoen);
+
 
 ?>
 <!DOCTYPE html>
